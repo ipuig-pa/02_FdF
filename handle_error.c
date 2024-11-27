@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.c                                              :+:      :+:    :+:   */
+/*   handle_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/21 17:29:35 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/11/27 15:59:50 by ipuig-pa         ###   ########.fr       */
+/*   Created: 2024/11/27 15:46:38 by ipuig-pa          #+#    #+#             */
+/*   Updated: 2024/11/27 15:46:58 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	main(int argc, char *argv)
+void	handle_error(t_env env)
 {
-	t_env	env;
-	
-	if (argc!= 2)
-		return(ft_printf("Incorrect number of arguments"), 1);
-	env->map_file = argv[1]
-	init_env(&env);
-	parse_map(argv[1]);
-
-
-
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
-	mlx_destroy_window(mlx_window);
-	mlx_destroy_display(mlx);
-	free(mlx);
+	if (env->mlx)
+		close (anar tancant tot i exit al final)
+	free() tot;
 	finish_env();
 }
+
