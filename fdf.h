@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:26:24 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/11/28 13:45:50 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/11/28 18:24:29 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,13 @@
 # include <math.h>
 # include <fcntl.h>
 
-# define WINDOW_HEIGHT 1080
-# define WINDOW_WIDTH 1920
+# include <stdio.h>
+
+# define WINDOW_HEIGHT 1000
+# define WINDOW_WIDTH 1020
+# define MARGIN (0.01 * WINDOW_WIDTH)
+# define DISTX 10
+# define DISTY 12
 # define BLACK 0x00000000
 # define WHITE 0x00FFFFFF
 
@@ -39,10 +44,9 @@ typedef struct	s_coord {
 }				t_coord;
 
 typedef struct	s_fcoord {
-	double	x;
-	double	y;
+	float	x;
+	float	y;
 }				t_fcoord;
-
 
 typedef struct s_env {
 	char		*map_file;
@@ -54,22 +58,21 @@ typedef struct s_env {
 	int			def_color;
 	t_coord		*coord;
 	t_fcoord	*fcoord;
-	double		min_x;
-	double		min_y;
-	double		max_x;
-	double		max_y;
+	float		min_x;
+	float		min_y;
+	float		max_x;
+	float		max_y;
 }				t_env;
-
 
 int		init_env(t_env *env);
 void	paint_background(t_env *env, int color);
 void	my_pixel_put(t_data *img, int x, int y, int color);
 void	put_line(t_env *env);
-void	join_points(t_env *env, int x1, int y1, int x2, int y2);
+void	join_points(t_env *env, float x1, float y1, float x2, float y2);
 
 void	get_dimensions(t_env *env);
 void	parse_map(t_env *env);
 void	find_final_coordinates(t_env *env);
-//void	fit_in_window(t_env *env);
+void	fit_in_window(t_env *env);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:48:25 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/11/28 13:41:40 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/11/28 17:33:32 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,33 +64,48 @@ void	put_line(t_env *env)
 	i = 0;
 	while (i < (env->map_height * env->map_width))
 	{
-		if (i % env->map_width != 0)
+		//ft_printf("prei: %i\n", i);
+		if ((i + 1) % env->map_width != 0)
+		{
+			printf("pre-nexti: %i; x:%f, y: %f, x2: %f, Y2: %f\n", i, env->fcoord[i].x, env->fcoord[i].y, env->fcoord[i + 1].x, env->fcoord[i + 1].y);
 			join_points(env, env->fcoord[i].x, env->fcoord[i].y, env->fcoord[i + 1].x, env->fcoord[i + 1].y);
-		if (i % env->map_height != 0)
+			ft_printf("post-nexti: %i\n", i);
+		}
+		if (i < ((env->map_height - 1) * env->map_width))
+		{
+			ft_printf("pre-downi: %i\n", i);
 			join_points(env, env->fcoord[i].x, env->fcoord[i].y, env->fcoord[i + env->map_width].x, env->fcoord[i + env->map_width].y);
+			ft_printf("post-downi: %i\n", i);
+		}
+		//ft_printf("posti: %i\n", i);
+		i++;
 	}
 	//tenir en compte el color
 	//my_pixel_put(env->img, x, y, 0x00FF0000);//is going to print a red pixel. Need to create a while loop for all the pixels in our 2D array of 2D that should be printed. 
 }
 
-void	join_points(t_env *env, int x1, int y1, int x2, int y2)
+void	join_points(t_env *env, float x1, float y1, float x2, float y2)
 {
-	int	dx;
-	int	dy;
-	int	steps;
-	int	i;
+	float	dx;
+	float	dy;
+	int		steps;
+	int		i;
 
+	//ft_printf("check\n");
 	dx = x2 - x1;
 	dy = y2 - y1;
-	steps = dx;
+	//printf("dx: %lf, dy: %lf\n", dx, dy);
+	steps = abs((int)dx);
 	if (dy > dx)
-		steps = dy;
+		steps = abs((int)dy);
+	//ft_printf("steps: %i\n", steps);
 	dx = dx / steps;
 	dy = dy / steps;
 	i = 0;
 	while (i < steps)
 	{
-		my_pixel_put(&(env->img), x1, y1, WHITE);
+		//ft_printf("put; x1: %i, y1: %i\n", (int)x1, (int)y1);
+		my_pixel_put(&(env->img), (int)x1, (int)y1, WHITE);
 		x1 = x1 + dx;
 		y1 = y1 + dy;
 		i++;
