@@ -2,7 +2,9 @@ NAME = fdf
 
 CFLAGS = -Wall -Wextra -Werror
 
-SOURCES = fdf.c
+SOURCES = 	fdf.c \
+			drawing.c \
+			map_to_coord.c
 OBJECTS = $(SOURCES:.c=.o)
 HEADER = fdf.h
 
@@ -12,16 +14,17 @@ LIBFT = $(LIBFT_DIR)/libft.a
 FT_PRINTF_DIR = ft_printf
 FT_PRINTF= $(FT_PRINTF_DIR)/libftprintf.a
 
-MLX_FLAGS = -lmlx -framework OpenGL -framework AppKit
-MLX_DIR = minilibx_macos
-MLX = $(MLX_DIR)/mlx.a
+#MLX_FLAGS = -lmlx -framework OpenGL -framework AppKit
+MLX_DIR = minilibx-linux #minilibx_macos
+MLX = $(MLX_DIR)/libmlx.a
 
 all: $(NAME)
 
 $(NAME) : $(OBJECTS) $(MLX) $(LIBFT) $(FT_PRINTF)
-	cc $(CFLAGS) $(OBJECTS) -L$(MLX_DIR) $(MLX_FLAGS) -o $(NAME)
+	cc $(CFLAGS) $(OBJECTS) -L$(MLX_DIR) -L$(LIBFT_DIR) -L$(FT_PRINTF_DIR) -lmlx -lXext -lX11 -lftprintf -lft -o $(NAME)
 
 %.o: %.c $(HEADER)
+#cc $(CFLAGS) -I$(MLX_DIR) -I$(LIBFT_DIR) -I$(FT_PRINTF_DIR) -c $< -o $@
 	cc $(CFLAGS) -I$(MLX_DIR) -I$(LIBFT_DIR) -I$(FT_PRINTF_DIR) -c $< -o $@
 
 $(LIBFT):
