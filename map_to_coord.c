@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:47:18 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/11/29 15:24:10 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:07:50 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	parse_map(t_env *env)
 			{
 				env->coord[(y * env->map_width) + x].z = ft_atoi(*ft_split(column[x], ','));
 				env->coord[(y * env->map_width) + x].color = ft_atoi_base(ft_substr(*(ft_split(column[x], ',') + 1), 2, 6), "0123456789ABCDEF");
-				ft_printf("i: %i, color: %X\n", (y * env->map_width) + x, env->coord[(y * env->map_width) + x].color);
+				//ft_printf("i: %i, color: %X\n", (y * env->map_width) + x, env->coord[(y * env->map_width) + x].color);
 				env->def_color = 1; //si no s-activa la flag de "color definit" en cap moment de la grid, cridar la funcio que transformi z en color.
 			}
 			else
@@ -128,6 +128,7 @@ void	define_color(t_env *env)
 	i = 0;
 	env->min_z = env->coord[i].z;
 	env->max_z = env->coord[i].z;
+	//ft_printf("color_def: %i\n", env->def_color);
 	if (env->def_color == 0)
 	{
 		while (i < (env->map_width * env->map_height))
@@ -139,12 +140,13 @@ void	define_color(t_env *env)
 			i++;
 		}
 	}
+	//ft_printf("color_def: %i\n", env->def_color);
 	i = 0;
 	while (i < (env->map_width * env->map_height))
 	{
-		if (env->def_color == 1)
+		if (env->def_color == 1 || (env->def_color == 0 && (env->max_z == env->min_z)))
 			env->fcoord[i].color = env->coord[i].color;
-		else
+		else if (env->max_z != env->min_z)
 			env->fcoord[i].color = (env->coord[i].z - env->min_z) * ((RED - WHITE) / (env->max_z - env->min_z)) + WHITE;
 		i++;
 	}
