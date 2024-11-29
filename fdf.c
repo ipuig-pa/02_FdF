@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:29:35 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/11/28 15:33:15 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:36:59 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ int	main(int argc, char **argv)
 	if (!init_env(&env))
 		return (1);
 	get_dimensions(&env);
+	//ft_printf("w: %i, h: %i, w x h: %i\n",env.map_width, env.map_height, (env.map_width * env.map_height));
 	parse_map(&env);
 	//printf("min_x: %lf, min_y: %lf, max_x: %lf, max_y: %lf\n", env.min_x, env.min_y, env.max_x, env.max_y);
 	find_final_coordinates(&env);
+	define_color(&env);
 	fit_in_window(&env);
 	//printf("min_x: %lf, min_y: %lf, max_x: %lf, max_y: %lf\n", env.min_x, env.min_y, env.max_x, env.max_y);
 	put_line(&env);
