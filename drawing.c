@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:48:25 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/11/30 11:09:24 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/11/30 12:20:40 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,22 @@ void	define_color(t_env *env)
 	env->max_z = env->coord[i].z;
 	if (env->def_color == 0)
 	{
-		while (i < (env->map_width * env->map_height))
+		while (i++ < (env->map_width * env->map_height))
 		{
-			if (env->coord[i].z < env->min_z)
-				env->min_z = env->coord[i].z;
-			else if (env->coord[i].z > env->max_z)
-				env->max_z = env->coord[i].z;
-			i++;
+			if (env->coord[i - 1].z < env->min_z)
+				env->min_z = env->coord[i - 1].z;
+			else if (env->coord[i - 1].z > env->max_z)
+				env->max_z = env->coord[i - 1].z;
 		}
 	}
 	i = 0;
 	while (i < (env->map_width * env->map_height))
 	{
-		if (env->def_color == 1 || (env->def_color == 0 && (env->max_z == env->min_z)))
+		if (env->max_z != env->min_z)
+			env->fcoord[i].color = (env->coord[i].z - env->min_z) * \
+						((RED - WHITE) / (env->max_z - env->min_z)) + WHITE;
+		else
 			env->fcoord[i].color = env->coord[i].color;
-		else if (env->max_z != env->min_z)
-			env->fcoord[i].color = (env->coord[i].z - env->min_z) * ((RED - WHITE) / (env->max_z - env->min_z)) + WHITE;
 		i++;
 	}
 }
@@ -63,8 +63,6 @@ void	put_line(t_env *env)
 {
 	int	i;
 
-	// if (!env || !env->img.img || !env->img.addr)
-	// 	finish_env(env, 1, "No image found\n");
 	i = 0;
 	while (i < (env->map_height * env->map_width))
 	{
@@ -83,8 +81,6 @@ void	join_points(t_env *env, t_fcoord point1, t_fcoord point2)
 	int		dc;
 	int		steps;
 
-	// if (!env || !env->img.img || !!env->img.addr)
-	// 	finish_env(env, 1, "No image found\n");
 	dx = point2.x - point1.x;
 	dy = point2.y - point1.y;
 	dc = point2.color - point1.color;
@@ -112,14 +108,9 @@ void	my_pixel_put(t_env *env, int x, int y, int color)
 	int		offset;
 	char	*pixel;
 
-	if (!env || !env->img.img || !env->img.addr || !env->img.line_length || !env->img.bits_per_pixel)
-		finish_env(env, 1, "No image found\n");
 	if (x < 0 || x >= WINDOW_WIDTH || y < 0 || y >= WINDOW_HEIGHT)
 		finish_env(env, 1, "Points out of bounds\n");
 	offset = (y * env->img.line_length + x * (env->img.bits_per_pixel / 8));
 	pixel = env->img.addr + offset;
 	*(unsigned int *)pixel = color;
 }
-
-
-

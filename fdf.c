@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:29:35 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/11/29 18:51:54 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/11/30 12:12:36 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,14 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (ft_printf("Incorrect number of arguments\n"), 1);
+	ft_memset(&env, 0, sizeof(t_env));
 	env.map_file = argv[1];
 	init_env(&env);
-	env.map_height = 0;
-	env.map_width = 0;
 	get_dimensions(&env);
 	parse_map(&env);
 	find_final_coordinates(&env);
-	fit_in_window(&env);
 	define_color(&env);
+	fit_in_window(&env);
 	put_line(&env);
 	mlx_put_image_to_window(env.mlx, env.mlx_window, env.img.img, 0, 0);
 	//mlx_mouse_hook(env.mlx_window, mouse_hook, &env);

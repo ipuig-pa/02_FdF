@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:47:18 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/11/29 16:07:50 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/11/30 12:29:30 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@ void	get_dimensions(t_env *env)
 	char	**column;
 
 	fd = open(env->map_file, 0);
-	/*if (fd < 0)
-		error_handling;*/
+	if (fd < 0)
+		finish_env(env, 1, "File doesn't exist or permission denied\n");
 	line = get_next_line(fd);
-	// if (!line)
-	// 	error_handling;
-	env->map_height = 0;
-	env->map_width = 0;
+	if (!line)
+		finish_env(env, 1, "Empty file or not properly formatted\n");
 	column = ft_split(line, ' ');
 	while (column[env->map_width])
 	{
@@ -33,14 +31,12 @@ void	get_dimensions(t_env *env)
 		env->map_width++;
 	}
 	free(column);
-	//ft_printf("count: %i; %s", env->map_height, line);
 	while (line)
 	{
+		free (line);
 		line = get_next_line(fd);
 		env->map_height++;
-		//ft_printf("count: %i; %s", env->map_height, line);
 	}
-	free (line);
 	close (fd);
 }
 
@@ -53,9 +49,9 @@ void	parse_map(t_env *env)
 	char	**column;
 
 	env->coord = (t_coord *)malloc((env->map_width * env->map_height) * sizeof(t_coord));
-	/*if (!env->coord)
-		handle_error();//definir be com fer el handling*/
-	fd = open(env->map_file, 0); //no cal fer error handling pq si fd <0 ja haurem fet exit a la funcio de get dimenstions amb handle error
+	if (!env->coord)
+		finish_env(env, 1, "Malloc fail\n");
+	fd = open(env->map_file, 0);
 	line = get_next_line(fd);
 	y = 0;
 	env->def_color = 0;
@@ -65,30 +61,82 @@ void	parse_map(t_env *env)
 		x = 0;
 		while (column[x])
 		{
-			//revisar aquesta part
-			if (ft_strchr(column[x], ','))
-			{
-				env->coord[(y * env->map_width) + x].z = ft_atoi(*ft_split(column[x], ','));
-				env->coord[(y * env->map_width) + x].color = ft_atoi_base(ft_substr(*(ft_split(column[x], ',') + 1), 2, 6), "0123456789ABCDEF");
-				//ft_printf("i: %i, color: %X\n", (y * env->map_width) + x, env->coord[(y * env->map_width) + x].color);
-				env->def_color = 1; //si no s-activa la flag de "color definit" en cap moment de la grid, cridar la funcio que transformi z en color.
-			}
-			else
-			{
-				env->coord[(y * env->map_width) + x].z = ft_atoi(column[x]);
-				env->coord[(y * env->map_width) + x].color = WHITE;
-			}
+			parse_z_and_color(env, column[x], (y * env->map_width) + x);
 			env->coord[(y * env->map_width) + x].x = x;
 			env->coord[(y * env->map_width) + x].y = y;
-			//ft_printf("%i; x: %i, y: %i, z: %i\n", (y * env->map_width) + x, env->coord[(y * env->map_width) + x].x, env->coord[(y * env->map_width) + x].y, env->coord[(y * env->map_width) + x].z);
+			free (column[x]);
 			x++;
 		}
+		free (line);
+		free (column);
 		line = get_next_line(fd);
 		y++;
 	}
-	free(column);
 	free(line);
 	close(fd);
+}
+
+void	parse_z_and_color(t_env *env, char *str, int i)
+{
+	char	**split;
+	char	*color;
+	int		j;
+	char	c;
+	static int		lower;
+
+	if (ft_strchr(str, ','))
+	{
+		split = ft_split(str, ',');
+		if (!split)
+			finish_env(env, 1, "Malloc fail\n");
+		env->coord[i].z = ft_atoi(*split);
+		color = ft_substr(split[1], 2, 8);
+		if (!color)
+		{
+			j = 0;
+			while (split[j])
+			{
+				free(split[j]);
+				j++;
+			}
+			finish_env(env, 1, "Malloc fail\n");
+		}
+		if (lower == 0)
+		{
+			c = 'a';
+			while (c <= 'f')
+			{
+				if (ft_strchr(color, c))
+					lower = 1;
+				c++;
+			}
+			c = 'A';
+			while (c <= 'F')
+			{
+				if (ft_strchr(color, c))
+					lower = -1;
+				c++;
+			}
+		}
+		if (lower == 1)
+			env->coord[i].color = ft_atoi_base(color, "0123456789abcdef");
+		else
+			env->coord[i].color = ft_atoi_base(color, "0123456789ABCDEF");
+		j = 0;
+		while (split[j])
+		{
+			free(split[j]);
+			j++;
+		}
+		free(split);
+		free(color);
+		env->def_color = 1;
+	}
+	else
+	{
+		env->coord[i].z = ft_atoi(str);
+		env->coord[i].color = WHITE;
+	}
 }
 
 void	find_final_coordinates(t_env *env)
@@ -96,8 +144,8 @@ void	find_final_coordinates(t_env *env)
 	int	i;
 
 	env->fcoord = (t_fcoord *)malloc((env->map_width * env->map_height) * sizeof(t_fcoord));
-	/*if (!env->fcoord)
-		handle_error();//definir be com fer el handling*/
+	if (!env->fcoord)
+		finish_env(env, 1, "Malloc fail\n");
 	i = 0;
 	env->min_x = 9.0 / 11 * DISTX * env->coord[i].x * cos(M_PI / 6) - (9.0 / 11 * DISTY * env->coord[i].y * sin(M_PI / 3));
 	env->max_x = env->min_x;
@@ -115,39 +163,6 @@ void	find_final_coordinates(t_env *env)
 			env->min_y = env->fcoord[i].y;
 		else if (env->fcoord[i].y > env->max_y)
 			env->max_y = env->fcoord[i].y;
-		//printf("%i; x0: %i, y0: %i, z0: %i, xf: %lf, yf: %lf\n", i, env->coord[i].x, env->coord[i].y, env->coord[i].z, env->fcoord[i].x, env->fcoord[i].y);
-		i++;
-	}
-	//free(env->coord); no ho puc fer encara si necessito el valor de color per mes endavant
-}
-
-void	define_color(t_env *env)
-{
-	int	i;
-
-	i = 0;
-	env->min_z = env->coord[i].z;
-	env->max_z = env->coord[i].z;
-	//ft_printf("color_def: %i\n", env->def_color);
-	if (env->def_color == 0)
-	{
-		while (i < (env->map_width * env->map_height))
-		{
-			if (env->coord[i].z < env->min_z)
-				env->min_z = env->coord[i].z;
-			else if (env->coord[i].z > env->max_z)
-				env->max_z = env->coord[i].z;
-			i++;
-		}
-	}
-	//ft_printf("color_def: %i\n", env->def_color);
-	i = 0;
-	while (i < (env->map_width * env->map_height))
-	{
-		if (env->def_color == 1 || (env->def_color == 0 && (env->max_z == env->min_z)))
-			env->fcoord[i].color = env->coord[i].color;
-		else if (env->max_z != env->min_z)
-			env->fcoord[i].color = (env->coord[i].z - env->min_z) * ((RED - WHITE) / (env->max_z - env->min_z)) + WHITE;
 		i++;
 	}
 }
@@ -166,15 +181,14 @@ void	fit_in_window(t_env *env)
 		isize = (env->max_x - env->min_x);
 		fsize = WINDOW_WIDTH;
 	}
-	scale = (fsize - (2 * MARGIN)) / isize;
-	//printf("isize: %f, fsize: %f, scale: %f\n", isize, fsize, scale);
+	scale = (fsize - (2 * 0.01 * fsize)) / isize;
 	i = 0;
 	while (i < (env->map_width * env->map_height))
 	{
-		//printf("pre%i; xf: %lf, yf: %lf\n", i, env->fcoord[i].x, env->fcoord[i].y);
 		env->fcoord[i].x = ((WINDOW_WIDTH / 2) - ((env->max_x - env->min_x) / 2) * scale) + ((env->fcoord[i].x - env->min_x) * scale);
 		env->fcoord[i].y = ((WINDOW_HEIGHT / 2) - ((env->max_y - env->min_y) / 2) * scale) + ((env->fcoord[i].y - env->min_y) * scale);
-		//printf("post%i; xf: %lf, yf: %lf\n", i, env->fcoord[i].x, env->fcoord[i].y);
 		i++;
 	}
 }
+
+
