@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:26:24 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/11/30 11:56:18 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/11/30 19:10:44 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 
 # define WINDOW_HEIGHT 1080
 # define WINDOW_WIDTH 1920
-# define DISTX 1
-# define DISTY 1
+# define DISTX 10
+# define DISTY 12
 # define BLACK 0x00000000
 # define WHITE 0x00FFFFFF
 # define RED 0x00FF0000
@@ -75,6 +75,7 @@ typedef struct s_env
 
 void	init_env(t_env *env);
 int		key_hook(int keycode, t_env *env);
+int		close_window(t_env *env);
 void	finish_env(t_env *env, int return_val, char *str);
 
 void	paint_background(t_env *env, int color);
@@ -88,5 +89,7 @@ void	parse_map(t_env *env);
 void	parse_z_and_color(t_env *env, char *str, int i);
 void	find_final_coordinates(t_env *env);
 void	fit_in_window(t_env *env);
+
+void	free_double_pointer(char **str);
 
 #endif

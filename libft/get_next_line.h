@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:05:54 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/11/17 12:50:52 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/11/30 16:03:36 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include "libft.h"
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 8
+#  define BUFFER_SIZE 2000
 # endif
 
 size_t	len(char *str);

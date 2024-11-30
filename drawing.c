@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:48:25 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/11/30 12:20:40 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/11/30 19:10:31 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	join_points(t_env *env, t_fcoord point1, t_fcoord point2)
 {
 	float	dx;
 	float	dy;
-	int		dc;
+	float	dc;
 	int		steps;
 
 	dx = point2.x - point1.x;
@@ -95,7 +95,7 @@ void	join_points(t_env *env, t_fcoord point1, t_fcoord point2)
 	}
 	while (steps >= 0)
 	{
-		my_pixel_put(env, (int)point1.x, (int)point1.y, point1.color);
+		my_pixel_put(env, (int)point1.x, (int)point1.y, (int)point1.color);
 		point1.x = point1.x + dx;
 		point1.y = point1.y + dy;
 		point1.color = point1.color + dc;

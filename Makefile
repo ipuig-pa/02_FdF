@@ -5,7 +5,8 @@ CFLAGS = -Wall -Wextra -Werror
 SOURCES = 	fdf.c \
 			manage_environment.c \
 			drawing.c \
-			map_to_coord.c
+			map_to_coord.c \
+			helper.c
 OBJECTS = $(SOURCES:.c=.o)
 HEADER = fdf.h
 
@@ -15,10 +16,10 @@ LIBFT = $(LIBFT_DIR)/libft.a
 FT_PRINTF_DIR = ft_printf
 FT_PRINTF= $(FT_PRINTF_DIR)/libftprintf.a
 
-#MLX_FLAGS = -lmlx -lXext -lX11
-MLX_FLAGS = -lmlx -framework OpenGL -framework AppKit
-#MLX_DIR = minilibx-linux 
-MLX_DIR = minilibx_macos
+MLX_FLAGS = -lmlx -lXext -lX11
+#MLX_FLAGS = -lmlx -framework OpenGL -framework AppKit
+MLX_DIR = minilibx-linux 
+#MLX_DIR = minilibx_macos
 MLX = $(MLX_DIR)/libmlx.a
 
 all: $(NAME)

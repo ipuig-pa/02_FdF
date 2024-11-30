@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_error.c                                     :+:      :+:    :+:   */
+/*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 15:46:38 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/11/27 15:46:58 by ipuig-pa         ###   ########.fr       */
+/*   Created: 2024/11/30 18:24:52 by ipuig-pa          #+#    #+#             */
+/*   Updated: 2024/11/30 19:10:28 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+# include "fdf.h"
 
-void	handle_error(t_env env)
+void	free_double_pointer(char **str)
 {
-	if (env->mlx)
-		close (anar tancant tot i exit al final)
-	free() tot;
-	finish_env();
-}
+	int	i;
 
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}

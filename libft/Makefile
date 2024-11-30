@@ -3,6 +3,7 @@ CFLAGS := -Wall -Wextra -Werror
 NAME := libft.a
 SOURCES := 	ft_atoi.c \
 			ft_atoi_base.c \
+			ft_atoi_hex.c \
 			ft_bzero.c \
 			ft_calloc.c \
 			ft_isalnum.c \
