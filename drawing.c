@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:48:25 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/11/29 18:45:40 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/11/30 11:09:24 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	paint_background(t_env *env, int color)
 		y = 0;
 		while (y < WINDOW_HEIGHT)
 		{
-			my_pixel_put(&(env->img), x, y, color);
+			my_pixel_put(env, x, y, color);
 			y++;
 		}
 		x++;
@@ -63,6 +63,8 @@ void	put_line(t_env *env)
 {
 	int	i;
 
+	// if (!env || !env->img.img || !env->img.addr)
+	// 	finish_env(env, 1, "No image found\n");
 	i = 0;
 	while (i < (env->map_height * env->map_width))
 	{
@@ -81,12 +83,14 @@ void	join_points(t_env *env, t_fcoord point1, t_fcoord point2)
 	int		dc;
 	int		steps;
 
+	// if (!env || !env->img.img || !!env->img.addr)
+	// 	finish_env(env, 1, "No image found\n");
 	dx = point2.x - point1.x;
 	dy = point2.y - point1.y;
 	dc = point2.color - point1.color;
-	steps = abs((int)dx);
-	if (dy > dx)
-		steps = abs((int)dy);
+	steps = abs((int)dx) + 1;
+	if (abs((int)dy) > abs((int)dx))
+		steps = abs((int)dy) + 1;
 	if (steps != 0)
 	{
 		dx = dx / steps;
@@ -95,7 +99,7 @@ void	join_points(t_env *env, t_fcoord point1, t_fcoord point2)
 	}
 	while (steps >= 0)
 	{
-		my_pixel_put(&(env->img), (int)point1.x, (int)point1.y, point1.color);
+		my_pixel_put(env, (int)point1.x, (int)point1.y, point1.color);
 		point1.x = point1.x + dx;
 		point1.y = point1.y + dy;
 		point1.color = point1.color + dc;
@@ -103,13 +107,17 @@ void	join_points(t_env *env, t_fcoord point1, t_fcoord point2)
 	}
 }
 
-void	my_pixel_put(t_data *img, int x, int y, int color)
+void	my_pixel_put(t_env *env, int x, int y, int color)
 {
 	int		offset;
 	char	*pixel;
 
-	offset = (y * img->line_length + x * (img->bits_per_pixel / 8));
-	pixel = img->addr + offset;
+	if (!env || !env->img.img || !env->img.addr || !env->img.line_length || !env->img.bits_per_pixel)
+		finish_env(env, 1, "No image found\n");
+	if (x < 0 || x >= WINDOW_WIDTH || y < 0 || y >= WINDOW_HEIGHT)
+		finish_env(env, 1, "Points out of bounds\n");
+	offset = (y * env->img.line_length + x * (env->img.bits_per_pixel / 8));
+	pixel = env->img.addr + offset;
 	*(unsigned int *)pixel = color;
 }
 
