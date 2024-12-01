@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:48:25 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/11/30 19:10:31 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/12/01 10:23:46 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,35 +27,6 @@ void	paint_background(t_env *env, int color)
 			y++;
 		}
 		x++;
-	}
-}
-
-void	define_color(t_env *env)
-{
-	int	i;
-
-	i = 0;
-	env->min_z = env->coord[i].z;
-	env->max_z = env->coord[i].z;
-	if (env->def_color == 0)
-	{
-		while (i++ < (env->map_width * env->map_height))
-		{
-			if (env->coord[i - 1].z < env->min_z)
-				env->min_z = env->coord[i - 1].z;
-			else if (env->coord[i - 1].z > env->max_z)
-				env->max_z = env->coord[i - 1].z;
-		}
-	}
-	i = 0;
-	while (i < (env->map_width * env->map_height))
-	{
-		if (env->max_z != env->min_z)
-			env->fcoord[i].color = (env->coord[i].z - env->min_z) * \
-						((RED - WHITE) / (env->max_z - env->min_z)) + WHITE;
-		else
-			env->fcoord[i].color = env->coord[i].color;
-		i++;
 	}
 }
 

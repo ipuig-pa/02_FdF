@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:29:35 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/11/30 19:21:46 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/12/01 10:29:16 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int	main(int argc, char **argv)
 	t_env	env;
 
 	if (argc != 2)
-		return (ft_printf("Incorrect number of arguments"), 1);
+		return (perror("Incorrect number of arguments\n"), 1);
 	ft_memset(&env, 0, sizeof(t_env));
 	env.map_file = argv[1];
-	get_dimensions(&env);
+	get_map_dimensions(&env);
 	init_env(&env);
 	parse_map(&env);
 	find_final_coordinates(&env);

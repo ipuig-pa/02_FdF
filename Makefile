@@ -4,9 +4,10 @@ CFLAGS = -Wall -Wextra -Werror
 
 SOURCES = 	fdf.c \
 			manage_environment.c \
+			get_map_data.c \
+			process_map_data.c \
 			drawing.c \
-			map_to_coord.c \
-			helper.c
+			memory_helper.c
 OBJECTS = $(SOURCES:.c=.o)
 HEADER = fdf.h
 
