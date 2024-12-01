@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_to_coord.c                                     :+:      :+:    :+:   */
+/*   get_map_data.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:47:18 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/12/01 10:29:53 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/12/01 11:40:57 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	get_map_dimensions(t_env *env)
 
 	fd = open(env->map_file, 0);
 	if (fd < 0)
-		finish_env(env, 1, "File doesn't exist or permission denied\n");
+		finish_env(env, 1, "File doesn't exist or permission denied");
 	line = get_next_line(fd);
 	if (!line)
-		finish_env(env, 1, "Empty map\n");
+		finish_env(env, 1, "Empty map");
 	column = ft_split(line, ' ');
 	if (!column)
 		handle_allocated_and_finish(env, line);
@@ -48,7 +48,7 @@ void	parse_map(t_env *env)
 	fd = open(env->map_file, 0);
 	line = get_next_line(fd);
 	if (!line)
-		finish_env(env, 1, "Malloc fail\n");
+		finish_env(env, 1, "Malloc fail");
 	y = 0;
 	while (line)
 	{
@@ -88,13 +88,13 @@ void	parse_z_and_color(t_env *env, char *str, int i)
 	{
 		split = ft_split(str, ',');
 		if (!split)
-			finish_env(env, 1, "Malloc fail\n");
+			finish_env(env, 1, "Malloc fail");
 		env->coord[i].z = ft_atoi(*split);
 		color = ft_substr(split[1], 2, 8);
 		if (!color)
 		{
 			free_double_pointer(split);
-			finish_env(env, 1, "Malloc fail\n");
+			finish_env(env, 1, "Malloc fail");
 		}
 		env->coord[i].color = ft_atoi_hex(color);
 		free_double_pointer(split);

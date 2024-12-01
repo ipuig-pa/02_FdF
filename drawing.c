@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:48:25 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/12/01 10:23:46 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/12/01 11:39:31 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	my_pixel_put(t_env *env, int x, int y, int color)
 	char	*pixel;
 
 	if (x < 0 || x >= WINDOW_WIDTH || y < 0 || y >= WINDOW_HEIGHT)
-		finish_env(env, 1, "Points out of bounds\n");
+		finish_env(env, 1, "Points out of bounds");
 	offset = (y * env->img.line_length + x * (env->img.bits_per_pixel / 8));
 	pixel = env->img.addr + offset;
 	*(unsigned int *)pixel = color;

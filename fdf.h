@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:26:24 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/12/01 10:31:30 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/12/01 11:51:02 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include <ft_printf.h>
 # include <math.h>
 # include <fcntl.h>
-
-# include <stdio.h>
 
 # define WINDOW_HEIGHT 1080
 # define WINDOW_WIDTH 1920
