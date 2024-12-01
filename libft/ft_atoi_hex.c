@@ -6,11 +6,11 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:15:49 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/11/30 18:36:40 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/12/01 11:58:58 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "libft.h"
+#include "libft.h"
 
 static int	hex_to_dec(char c)
 {

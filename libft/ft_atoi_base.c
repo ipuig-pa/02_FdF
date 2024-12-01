@@ -6,11 +6,11 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:15:49 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/11/29 15:22:06 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/12/01 11:58:55 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "libft.h"
+#include "libft.h"
 
 static int	is_valid_base(char *base, int n)
 {
