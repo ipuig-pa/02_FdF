@@ -6,17 +6,17 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:26:24 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/12/01 11:51:02 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:12:03 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 # include <mlx.h>
-# include <libft.h>
-# include <ft_printf.h>
 # include <math.h>
 # include <fcntl.h>
+# include "../libft/libft.h"
+# include "../ft_printf/ft_printf.h"
 
 # define WINDOW_HEIGHT 1080
 # define WINDOW_WIDTH 1920

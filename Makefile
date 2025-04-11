@@ -2,14 +2,23 @@ NAME = fdf
 
 CFLAGS = -Wall -Wextra -Werror
 
+SRC_DIR = src
+OBJ_DIR = obj
+
+VPATH =	$(SRC_DIR)
+
 SOURCES = 	fdf.c \
 			manage_environment.c \
 			get_map_data.c \
 			process_map_data.c \
 			drawing.c \
 			memory_helper.c
-OBJECTS = $(SOURCES:.c=.o)
-HEADER = fdf.h
+
+OBJECTS = $(SOURCES:%.c=$(OBJ_DIR)/%.o)
+
+INC = inc
+
+HEADER = $(INC)/fdf.h
 
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -25,11 +34,14 @@ MLX = $(MLX_DIR)/libmlx.a
 
 all: $(NAME)
 
-$(NAME) : $(OBJECTS) $(MLX) $(LIBFT) $(FT_PRINTF)
+$(NAME) : $(OBJ_DIR) $(OBJECTS) $(MLX) $(LIBFT) $(FT_PRINTF)
 	cc $(CFLAGS) $(OBJECTS) -L$(MLX_DIR) -L$(LIBFT_DIR) -L$(FT_PRINTF_DIR) $(MLX_FLAGS) -lftprintf -lft -o $(NAME)
 
-%.o: %.c $(HEADER)
-	cc $(CFLAGS) -I$(MLX_DIR) -I$(LIBFT_DIR) -I$(FT_PRINTF_DIR) -c $< -o $@
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+$(OBJ_DIR)/%.o: %.c $(OBJ_DIR) $(HEADER)
+	cc $(CFLAGS) -I$(MLX_DIR) -I$(LIBFT_DIR) -I$(FT_PRINTF_DIR) -Iinc -c $< -o $@
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
