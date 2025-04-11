@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 10:21:18 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/12/01 10:21:18 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:55:44 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,13 @@ void	define_color(t_env *env)
 		}
 	}
 	i = 0;
-	while (i < (env->map_width * env->map_height))
+	while (i++ < (env->map_width * env->map_height))
 	{
 		if (env->max_z != env->min_z)
-			env->fcoord[i].color = (env->coord[i].z - env->min_z) * \
-						((RED - WHITE) / (env->max_z - env->min_z)) + WHITE;
+			env->fcoord[i - 1].color = interpolate_color(WHITE, RED, \
+			((float)(env->coord[i - 1].z - env->min_z) \
+			/ (float)(env->max_z - env->min_z)));
 		else
-			env->fcoord[i].color = env->coord[i].color;
-		i++;
+			env->fcoord[i - 1].color = env->coord[i - 1].color;
 	}
 }

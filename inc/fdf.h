@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:26:24 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2025/04/11 15:12:03 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:03:44 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	define_color(t_env *env);
 void	paint_background(t_env *env, int color);
 void	put_line(t_env *env);
 void	join_points(t_env *env, t_fcoord point1, t_fcoord point2);
+int		interpolate_color(int col1, int col2, float t);
 void	my_pixel_put(t_env *env, int x, int y, int color);
 
 //helper
