@@ -4,7 +4,7 @@
 
 This project was developed individually by:
 
-- ipuig-pa
+- @ipuig-pa
 
 ## Project Overview
 
@@ -106,3 +106,9 @@ Custom map with color-coded points
 
 ![Alt text](https://github.com/ipuig-pa/02_FdF/blob/master/images/t2.png)
 Big color-coded surface, symbolizing Earth surface
+
+## License
+
+---
+
+This project was developed as part of the curriculum at 42 School. Use of this code must comply with the school's academic integrity policies.
